@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>番茄钟</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="title-bar">
+      <span class="app-title">🍅 番茄钟</span>
+    </div>
+
+    <div class="mode-tabs">
+      <button class="tab active" data-mode="focus">专注</button>
+      <button class="tab" data-mode="short">短休息</button>
+      <button class="tab" data-mode="long">长休息</button>
+    </div>
+
+    <div class="timer-ring-container">
+      <svg class="ring" viewBox="0 0 200 200">
+        <circle class="ring-bg" cx="100" cy="100" r="88" />
+        <circle class="ring-progress" id="ring-progress" cx="100" cy="100" r="88" />
+      </svg>
+      <div class="timer-display" id="timer-display">25:00</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn-icon" id="btn-reset" title="重置">↺</button>
+      <button class="btn-primary" id="btn-start">开始</button>
+      <button class="btn-icon" id="btn-skip" title="跳过">⏭</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-value" id="today-count">0</span>
+        <span class="stat-label">今日番茄</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value" id="session-count">0</span>
+        <span class="stat-label">本轮计数</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value" id="total-count">0</span>
+        <span class="stat-label">历史总计</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
