@@ -1,9 +1,9 @@
 const { ipcRenderer } = require('electron');
 
 const MODES = {
-  focus: { label: '专注', duration: 25 * 60, bodyClass: '' },
-  short: { label: '短休息', duration: 5 * 60, bodyClass: 'mode-short' },
-  long:  { label: '长休息', duration: 15 * 60, bodyClass: 'mode-long' },
+  focus: { label: 'FOCUS',       duration: 25 * 60, bodyClass: '' },
+  short: { label: 'SHORT BREAK', duration: 5 * 60,  bodyClass: 'mode-short' },
+  long:  { label: 'LONG BREAK',  duration: 15 * 60, bodyClass: 'mode-long' },
 };
 
 const RING_CIRCUMFERENCE = 2 * Math.PI * 88;
@@ -55,6 +55,7 @@ function pruneOldKeys() {
 
 // DOM refs
 const timerDisplay = document.getElementById('timer-display');
+const timerModeLabel = document.getElementById('timer-mode-label');
 const ringProgress = document.getElementById('ring-progress');
 const btnStart = document.getElementById('btn-start');
 const btnReset = document.getElementById('btn-reset');
@@ -98,25 +99,26 @@ function setMode(mode) {
   currentMode = mode;
   tabs.forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
   document.body.className = MODES[mode].bodyClass;
+  timerModeLabel.textContent = MODES[mode].label;
   timeLeft = MODES[mode].duration;
   updateDisplay();
-  document.title = `番茄钟 — ${MODES[mode].label}`;
+  document.title = `POMODORO — ${MODES[mode].label}`;
 }
 
 function start() {
-  btnStart.textContent = '暂停';
+  btnStart.textContent = 'PAUSE';
   timerDisplay.classList.add('ticking');
   timerId = setInterval(tick, 1000);
 }
 
 function pause() {
   stopTimer();
-  btnStart.textContent = '继续';
+  btnStart.textContent = 'RESUME';
 }
 
 function reset() {
   stopTimer();
-  btnStart.textContent = '开始';
+  btnStart.textContent = 'START';
   timeLeft = MODES[currentMode].duration;
   updateDisplay();
 }
@@ -132,7 +134,7 @@ function tick() {
 
 function onTimerEnd() {
   stopTimer();
-  btnStart.textContent = '开始';
+  btnStart.textContent = 'START';
 
   if (currentMode === 'focus') {
     sessionCount++;
@@ -165,7 +167,7 @@ tabs.forEach(tab => {
   tab.addEventListener('click', () => {
     if (timerId) pause();
     setMode(tab.dataset.mode);
-    btnStart.textContent = '开始';
+    btnStart.textContent = 'START';
   });
 });
 

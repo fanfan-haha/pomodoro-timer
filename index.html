@@ -3,48 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <title>番茄钟</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Barlow+Condensed:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app">
     <div class="title-bar">
-      <span class="app-title">🍅 番茄钟</span>
+      <span class="app-title">POMODORO</span>
     </div>
 
     <div class="mode-tabs">
-      <button class="tab active" data-mode="focus">专注</button>
-      <button class="tab" data-mode="short">短休息</button>
-      <button class="tab" data-mode="long">长休息</button>
+      <button class="tab active" data-mode="focus">FOCUS</button>
+      <button class="tab" data-mode="short">SHORT</button>
+      <button class="tab" data-mode="long">LONG</button>
     </div>
 
     <div class="timer-ring-container">
+      <div class="ring-glow"></div>
       <svg class="ring" viewBox="0 0 200 200">
+        <defs>
+          <filter id="glow-filter" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
         <circle class="ring-bg" cx="100" cy="100" r="88" />
-        <circle class="ring-progress" id="ring-progress" cx="100" cy="100" r="88" />
+        <circle class="ring-progress" id="ring-progress" cx="100" cy="100" r="88" filter="url(#glow-filter)" />
       </svg>
-      <div class="timer-display" id="timer-display">25:00</div>
+      <div class="timer-inner">
+        <div class="timer-display" id="timer-display">25:00</div>
+        <div class="timer-mode-label" id="timer-mode-label">FOCUS</div>
+      </div>
     </div>
 
     <div class="controls">
       <button class="btn-icon" id="btn-reset" title="重置">↺</button>
-      <button class="btn-primary" id="btn-start">开始</button>
+      <button class="btn-primary" id="btn-start">START</button>
       <button class="btn-icon" id="btn-skip" title="跳过">⏭</button>
     </div>
 
     <div class="stats">
       <div class="stat-item">
+        <span class="stat-label">TODAY</span>
         <span class="stat-value" id="today-count">0</span>
-        <span class="stat-label">今日番茄</span>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
+        <span class="stat-label">SESSION</span>
         <span class="stat-value" id="session-count">0</span>
-        <span class="stat-label">本轮计数</span>
       </div>
       <div class="stat-divider"></div>
       <div class="stat-item">
+        <span class="stat-label">TOTAL</span>
         <span class="stat-value" id="total-count">0</span>
-        <span class="stat-label">历史总计</span>
       </div>
     </div>
   </div>
